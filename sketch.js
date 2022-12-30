@@ -1,15 +1,15 @@
 var song
-var songIsplay=false
-var amp
-var vol=0
-var m_x,m_y
-var music_btn,mouse_btn,Speech_btn
-var mosueIsplay=true
-var myRec = new p5.SpeechRec();
-var result
-function preload(){
-  song = loadSound("1116.mp3");
-}
+  var songIsplay=false
+  var amp
+  var vol=0
+  var m_x,m_y
+  var music_btn,mouse_btn,Speech_btn
+  var mosueIsplay=true
+  var myRec = new p5.SpeechRec();
+  var result
+  function preload(){
+    song = loadSound("1116.mp3");
+  }
 
   function setup() {
   createCanvas(windowWidth, windowHeight);
@@ -74,35 +74,11 @@ function Speech_btn_pressed(){
 
 }
 
-function showResult()
-	{
-		if(myRec.resultValue==true) {
-            //顯示辨識文字
-          push()
-            translate(0,0)
-            background(192, 255, 192);
-            fill(255,0,0)
-            textStyle("italic")
-            text(myRec.resultString,1200,10);
-            text(myRec.resultString,0, height/2);
-          pop()
-        //=======================
-          result = myRec.resultString
-          if(myRec.resultString==="跳舞")
-          {
-            music_btn_pressed()
-          }
-          if(myRec.resultString==="不要跳")
-          {
-            song.pause()
-            mosueIsplay = true
-            songIsplay = false
-            }
-		}
-	}
 
 
 function draw() {
+
+
   background("#fbc4ab");
   textSize(30)
   text("X:"+mouseX+"Y:"+mouseY,100,100)
@@ -112,6 +88,20 @@ function draw() {
   fill(255,0,0)  
   text(result,1100,100);   
   pop()
+ 
+
+  if(songIsplay){
+    vol = amp.getLevel()
+    m_x =map(vol,0,1,0,width) 
+    m_y= map(vol,0,1,0,height)
+  }
+  else
+  if(mosueIsplay)
+  {
+    m_x = mouseX
+    m_y= mouseY
+
+  }
  
 {
 push()
@@ -123,27 +113,27 @@ push()
   ellipse(-40,-30,50)
   ellipse(+40,-30,50)//左右眼眶
 
-  ellipse(+100+mouseX/500,+55,40)//尾巴
+  ellipse(+100+m_x/50,+55,40)//尾巴
 
   fill(255,0,0)
-  ellipse(-40+mouseX/200,-30,30)
-  ellipse(+40+mouseX/200,-30,30)//左右眼珠
+  ellipse(-40+m_x/100,-30,30)
+  ellipse(+40+m_x/100,-30,30)//左右眼珠
 
   fill(255)
-  ellipse(-60,-125+mouseY/100,35,100)
-  ellipse(+60,-125+mouseY/100,35,100)//左右耳
+  ellipse(-60,-125+m_y/10,35,100)
+  ellipse(+60,-125+m_y/10,35,100)//左右耳
 
   fill("#FFECF5")
-  ellipse(-60,-107+mouseY/100,30,60)
-  ellipse(+60,-107+mouseY/100,30,60)//左右耳
+  ellipse(-60,-107+m_y/10,30,60)
+  ellipse(+60,-107+m_y/10,30,60)//左右耳
 
   fill(255)
   noStroke()
-  ellipse(-42+mouseX/200,-32,15)
-  ellipse(+42+mouseX/200,-32,15)
+  ellipse(-42+m_x/100,-32,15)
+  ellipse(+42+m_x/100,-32,15)
 
-  ellipse(-50+mouseX/200,-25,10)
-  ellipse(+50+mouseX/200,-25,10)//左右眼白
+  ellipse(-50+m_x/100,-25,10)
+  ellipse(+50+m_x/100,-25,10)//左右眼白
 
   
   fill("#FFB5B5")
@@ -167,6 +157,4 @@ push()
 pop()
 
 }
-
-
 }
